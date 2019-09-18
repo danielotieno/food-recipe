@@ -3,12 +3,14 @@ import "./App.css";
 import "dotenv/config";
 
 function App() {
+  const { APP_ID, APP_KEY } = process.env;
+
+  const [recipes, setRecipes] = useState([]);
+
   useEffect(() => {
     data();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const { APP_ID, APP_KEY } = process.env;
 
   const data = async () => {
     const sampleData = await fetch(
@@ -16,15 +18,18 @@ function App() {
     );
 
     const fetchedData = await sampleData.json();
-    console.log(fetchedData);
+    console.log(fetchedData.hits);
+    setRecipes(fetchedData.hits);
   };
 
   return (
     <div className="App">
       <h1>Hello World</h1>
-      <form>
-        <input type="search" />
-        <button>Search</button>
+      <form className="search-form">
+        <input className="search-bar" type="text" />
+        <button className="search-button" type="search">
+          Search
+        </button>
       </form>
     </div>
   );
