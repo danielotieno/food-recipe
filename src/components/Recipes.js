@@ -52,6 +52,7 @@ const Recipes = () => {
           calories={recipe.recipe.calories}
           weight={recipe.recipe.totalWeight}
           image={recipe.recipe.image}
+          ingredients={recipe.recipe.ingredients}
         />
       ))}
     </>
