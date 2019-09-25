@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "dotenv/config";
+import axios from "axios";
 import Recipe from "./Recipe";
 
 const Recipes = () => {
@@ -14,13 +15,12 @@ const Recipes = () => {
   }, [query]);
 
   const data = async () => {
-    const sampleData = await fetch(
+    const sampleData = await axios.get(
       `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&from=0&to=8&calories=591-722&health=alcohol-free`
     );
 
-    const fetchedData = await sampleData.json();
-    setRecipes(fetchedData.hits);
-    console.log(fetchedData.hits);
+    const { data } = sampleData;
+    setRecipes(data.hits);
   };
 
   const searchRecipe = e => {
