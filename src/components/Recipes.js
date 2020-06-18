@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
-import "dotenv/config";
-import axios from "axios";
-import Recipe from "./Recipe";
+import React, { useState, useEffect } from 'react';
+import 'dotenv/config';
+import axios from 'axios';
+import Recipe from './Recipe';
 
 const Recipes = () => {
-  const { APP_ID, APP_KEY } = process.env;
+  const APP_ID = process.env.REACT_APP_ID;
+  const APP_KEY = process.env.REACT_APP_KEY;
   const [recipes, setRecipes] = useState([]);
-  const [search, setSearch] = useState("");
-  const [query, setQuery] = useState("beef");
+  const [search, setSearch] = useState('');
+  const [query, setQuery] = useState('beef');
 
   useEffect(() => {
     data();
@@ -16,38 +17,39 @@ const Recipes = () => {
 
   const data = async () => {
     const sampleData = await axios.get(
-      `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&from=0&to=8&calories=591-722&health=alcohol-free`
+      `/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&from=0&to=8&calories=591-722&health=alcohol-free`,
     );
 
     const { data } = sampleData;
     setRecipes(data.hits);
   };
 
-  const searchRecipe = e => {
+  const searchRecipe = (e) => {
     setSearch(e.target.value);
   };
 
-  const getQuery = e => {
+  const getQuery = (e) => {
     e.preventDefault();
     setQuery(search);
-    setSearch("");
+    setSearch('');
   };
   return (
     <div>
-      <form className="search-form" onSubmit={getQuery}>
+      <h1 className='heading'>Search Recipe</h1>
+      <form className='search-form' onSubmit={getQuery}>
         <input
-          className="search-bar"
-          type="text"
+          className='search-bar'
+          type='text'
           value={search}
           onChange={searchRecipe}
-          placeholder="search recipe"
+          placeholder='search recipe'
         />
-        <button className="search-button" type="search">
+        <button className='search-button' type='search'>
           Search
         </button>
       </form>
-      <div className="recipes">
-        {recipes.map(recipe => (
+      <div className='recipes'>
+        {recipes.map((recipe) => (
           <Recipe
             key={recipe.recipe.label}
             title={recipe.recipe.label}
